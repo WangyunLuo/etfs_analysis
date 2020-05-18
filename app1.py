@@ -20,7 +20,8 @@ USERNAME_PASSWORD_PAIRS = [
 app = dash.Dash()
 auth = dash_auth.BasicAuth(app, USERNAME_PASSWORD_PAIRS)
 server = app.server
-
+# --------------------------------- df should be defined first ------------------------------------------
+df = pd.read_csv(processed_data_path, index_col=0)
 # ----------------------------------- dash layout ---------------------------------------
 # We need to construct a dictionary of dropdown values for the indicators
 indicators_options = []
