@@ -61,6 +61,8 @@ app.layout = html.Div(
     [
 
         # html.H1('ETFs Dashboard', style={'margin'}),
+        html.H1("ETFs Dashboard", style={'text-align': 'center'}),
+        html.Hr(),
         html.Img(
             src='https://images.squarespace-cdn.com/content/5c036cd54eddec1d4ff1c1eb/1557908564936-YSBRPFCGYV2CE43OHI7F/GlobalAI_logo.jpg?content-type=image%2Fpng',
             style={
@@ -71,13 +73,12 @@ app.layout = html.Div(
                 'margin-top': 11,
                 'margin-right': 0}, className='two columns'
         ),
-        html.H1("ETFs Dashboard", style={'text-align': 'center'}),
         html.Hr(),
         html.Div([
             dbc.Row([
                 dbc.Col(html.Div([html.H3('Enter a ETFs ticker:', style={'paddingRight': '30px'}),
-                                  dcc.Dropdown(id='my-ticker', value='XLV', options=options)])),
-                # style={'verticalAlign': 'top', 'display': 'inline-block'})),
+                                  dcc.Dropdown(id='my-ticker', value='XLV', options=options)],
+                                 style={'verticalAlign': 'top', 'display': 'inline-block'})),
                 dbc.Col(html.Div([html.H3('Select Date:'),
                                   dcc.DatePickerRange(id='date-range',
                                                       min_date_allowed=datetime(
@@ -178,19 +179,19 @@ def update_trend1_graph(n_clicks, etfs_ticker, start_date, end_date):
     timeseries_data = [
         go.Scatter(x=df.index, y=df[etfs_ticker],
                    mode="lines", name=f'{etfs_ticker}'),
-        go.Scatter(x=df.index, y=df['SPY'], mode="lines", name='SPY'),
+        # go.Scatter(x=df.index, y=df['SPY'], mode="lines", name='SPY'),
         go.Scatter(x=df.index, y=df[etfs_ticker].rolling(
             20).mean(), mode="lines", name=f"{etfs_ticker} 20_D_MA"),
-        go.Scatter(x=df.index, y=df["SPY"].rolling(
-            20).mean(), mode="lines", name="SPY 20_D_MA"),
+        # go.Scatter(x=df.index, y=df["SPY"].rolling(
+        #     20).mean(), mode="lines", name="SPY 20_D_MA"),
         go.Scatter(x=df.index, y=df[etfs_ticker].rolling(
             120).mean(), mode="lines", name=f"{etfs_ticker} 120_D_MA"),
-        go.Scatter(x=df.index, y=df["SPY"].rolling(
-            120).mean(), mode="lines", name="SPY 120_D_MA"),
+        # go.Scatter(x=df.index, y=df["SPY"].rolling(
+        #     120).mean(), mode="lines", name="SPY 120_D_MA"),
     ]
 
     timeseries = go.Figure(data=timeseries_data,
-                           layout=go.Layout(title=dict(text=f"{etfs_ticker}  SPY Time Series",
+                           layout=go.Layout(title=dict(text=f"{etfs_ticker} Time Series",
                                                        xanchor='right',
                                                        x=0.5),
                                             xaxis=dict(title='Date'),
