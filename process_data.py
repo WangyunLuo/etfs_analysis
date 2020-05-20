@@ -39,14 +39,17 @@ def cal_df_stats(df, tickers, indicators):
         elif indicator == "120D_Vol":
             tempt = [ticker + f"_{indicator}" for ticker in tickers]
             df[tempt] = df[tickers].rolling(120).std(ddof=0)
-        elif indicator == "5D_momentum":
+        elif indicator == "5D_Momentum":
             tempt = [ticker + f"_{indicator}" for ticker in tickers]
             df[tempt] = df[tickers] - df[tickers].shift(5)
-        elif indicator == "20D_momentum":
+        elif indicator == "20D_Momentum":
             tempt = [ticker + f"_{indicator}" for ticker in tickers]
             df[tempt] = df[tickers] - df[tickers].shift(20)
-            
+
     return df
+
+
+# df = input_data
 
 
 def cal_df_stats_multiprocess(indicator):
