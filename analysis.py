@@ -34,6 +34,9 @@ print(df.head())
 # print(df.head())
 """ resample """
 df_ohlc = df['Adj Close'].resample('1M').ohlc()
+print(df_ohlc.head())
+df
+plt.show()
 """ Visualization """
 ax1 = plt.subplot2grid((6, 1), (0, 0), rowspan=5, colspan=1)
 ax2 = plt.subplot2grid((6, 1), (5, 0), rowspan=2, colspan=1)

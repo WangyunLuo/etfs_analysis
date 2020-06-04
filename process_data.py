@@ -12,7 +12,6 @@ import time
 from functools import partial
 from itertools import product
 
-
 def cal_df_stats(df, tickers, indicators):
     """
     df: a multi-dimensional dataframe of increasing time series data
@@ -49,7 +48,7 @@ def cal_df_stats(df, tickers, indicators):
     return df
 
 
-# df = input_data
+df = pd.read_csv(input_data_path, index_col=0)
 
 
 def cal_df_stats_multiprocess(indicator):
@@ -92,13 +91,24 @@ def cal_df_stats_multiprocess(indicator):
 if __name__ == '__main__':
     # ---------------------------- Descriptive statistics -------------------------------
     df = pd.read_csv(input_data_path, index_col=0)
+    t1 = time.time()
     processed_data = cal_df_stats(df, tickers, indicators)
+    t2 = time.time()
+    f1_time = t2 - t1
+    print(f'Without using multiprocessing, elapsed time:{(f1_time)*1000} ms')
+    # processed_data.to_csv(processed_data_path)
     # --------------------------------- Multiprocessing ---------------------------------
+    t1 = time.time()
     pool = Pool(processes=2)
     results = pool.map(cal_df_stats_multiprocess, indicators)
     tempt = pd.concat(results, axis=1)
+    t2 = time.time()
+    f2_time = t2 - t1
+    print(f'Using multiprocessing, elapsed time:{(f2_time)*1000} ms')
+    print(
+        f'Time improvement is {(f1_time - f2_time)*1000} ms by multiprocessing')
     # --------------------------------- Merge DataFrame ---------------------------------
     df_data = pd.read_csv(input_data_path, index_col=0)
     processed_data_2 = df_data.merge(tempt, left_on='Date', right_index=True)
     processed_data_2.to_csv(processed_data_path)
-    print(processed_data_2.tail())
+    print(processed_data_2.head())

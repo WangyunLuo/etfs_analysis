@@ -1,4 +1,3 @@
 {
-    "git.ignoreLimitWarning": true,
-    "python.pythonPath": "venv/bin/python"
+    "python.pythonPath": "/Users/wangyunluo/anaconda3/envs/trading3.7.3/bin/python"
 }

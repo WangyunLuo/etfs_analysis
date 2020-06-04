@@ -37,10 +37,9 @@ min_date_allowed = datetime(2015, 4, 1)
 data = yf.download(tickers, min_date_allowed, date.today())
 input_data = data['Adj Close']
 volumn_data = data['Volume']
-# ---------------------------------------------------------------------------------------
-# ---------------------------------------------------------------------------------------
-# process the data
 processed_data = cal_df_stats(input_data, tickers, indicators)
+print(processed_data.tail())
+df = processed_data
 # --------------------------------- Multiprocessing ---------------------------------
 # df = input_data
 # import process_data
@@ -50,9 +49,6 @@ processed_data = cal_df_stats(input_data, tickers, indicators)
 # --------------------------------- Merge DataFrame ---------------------------------
 # df_data = pd.read_csv(input_data_path, index_col=0)
 # processed_data_2 = input_data.merge(tempt, left_on='Date', right_index=True)
-# processed_data_2.to_csv(processed_data_path)
-print(processed_data.tail())
-df = processed_data
 # ---------------------------------------------------------------------------------------
 # set up
 # server = app.server
@@ -152,29 +148,6 @@ def update_trend1_graph(n_clicks, etfs_ticker, start_date, end_date):
     df = processed_data.loc[(processed_data.index >= start_date) & (
         processed_data.index <= end_date)]
     # -----------------------------------------------------------------------------------
-    # update data if necessary
-
-    # -----------------------------------------------------------------------------------
-    # traces = [
-    #     go.Scatter(x=df.index, y=df[etfs_ticker],
-    #                mode="lines", name=etfs_ticker),
-    #     go.Scatter(x=df.index, y=df[etfs_ticker].rolling(
-    #         20).mean(), mode="lines", name=f"{etfs_ticker} 20_D_MA"),
-    #     go.Scatter(x=df.index, y=df["SPY"],
-    #                mode="lines", name="SPY"),
-    #     go.Scatter(x=df.index, y=df["SPY"].rolling(
-    #         20).mean(), mode="lines", name="SPY 20_D_MA"),
-    # ]
-    # trend = go.Figure(data=traces,
-    #                   layout=go.Layout(title=dict(text=f"{etfs_ticker} & SPY",
-    #                                               xanchor='center',
-    #                                               x=0.5),
-    #                                    xaxis=dict(title='Date'),
-    #                                    yaxis=dict(title='Price'),
-    #                                    paper_bgcolor="#222",
-    #                                    plot_bgcolor='#222',
-    #                                    font=dict(color='#fff')))
-
     # time series of both selected_ticker & SPY
     timeseries_data = [
         go.Scatter(x=df.index, y=df[etfs_ticker],
